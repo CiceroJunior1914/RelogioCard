@@ -87,7 +87,7 @@ function getUserPosition() {
     navigator.geolocation.getCurrentPosition((pos) => {
       let lat = pos.coords.latitude
       let long = pos.coords.longitude
-      url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=63e4aa0798d940085d27aa573e726998`
+      url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=63e4aa0798d940085d27aa573e726998&lang=pt-br`
       fetchApi(url)
       console.log(url)
     })
@@ -104,11 +104,13 @@ function getUserPosition() {
       return data.json()
     })
     .then((data) => {
-      const tempInCelsius = ((5/9) * (data.main.temp-32)).toFixed(1);
+      const tempInCelsius = ((5/9) * (data.main.temp-273)).toFixed(1);
+      const testTemp = data.main.temp
       city.textContent      = data.name
       temperature.innerHTML = tempInCelsius
       humidity.innerHTML    = data.main.humidity
       console.log(data)
+      console.log(testTemp)
       verificarTempo(10)
     })
     .catch((err) => {
@@ -118,13 +120,15 @@ function getUserPosition() {
   }
  
 function verificarTempo(clima){
+    const tempT = 30
     if(clima < 28){
         let imgTemp = document.querySelector("#tempImg")
 
         imgTemp.setAttribute('src','img/frio.svg')
         console.log("frio")
-    }else{
-        console.log("calor")
+    }else if(clima >= 28){
+        imgTemp.setAttribute('src','img/calor.svg')
+
     }
 }
 getUserPosition();
