@@ -104,14 +104,15 @@ function getUserPosition() {
       return data.json()
     })
     .then((data) => {
-      const tempInCelsius = ((5/9) * (data.main.temp-273)).toFixed(1);
+      const tempInCelsius = ((data.main.temp-273)).toFixed(1);
       const testTemp = data.main.temp
       city.textContent      = data.name
       temperature.innerHTML = tempInCelsius
       humidity.innerHTML    = data.main.humidity
       console.log(data)
       console.log(testTemp)
-      verificarTempo(10)
+      console.log(tempInCelsius)
+      verificarTempo(tempInCelsius)
     })
     .catch((err) => {
       city.innerText = `Impossível acessar o OpenWeather. Verifique a sua conexão.`;
@@ -120,7 +121,7 @@ function getUserPosition() {
   }
  
 function verificarTempo(clima){
-    const tempT = 30
+    console.log(clima, " tempo")
     if(clima < 28){
         let imgTemp = document.querySelector("#tempImg")
 
@@ -128,6 +129,7 @@ function verificarTempo(clima){
         console.log("frio")
     }else if(clima >= 28){
         imgTemp.setAttribute('src','img/calor.svg')
+        console.log("calor")
 
     }
 }
